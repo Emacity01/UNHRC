@@ -8,32 +8,62 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-/* --- YOUR ENTIRE CSS (UNCHANGED) --- */
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
 body{
-  background:
-    linear-gradient(rgba(12,20,40,0.82), rgba(12,20,40,0.9)),
-    url('https://images.unsplash.com/photo-1529101091764-c3526daf38fe?q=60&w=1200&auto=format&fit=crop')
-    no-repeat center center fixed;
-  background-size:cover;
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:#0c1428;
   color:white;
-  overflow-x:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
 }
-/* (… CSS trimmed here for readability — keep ALL your original CSS exactly as you pasted …) */
+
+.card{
+  width:600px;
+  background:#000;
+  border-radius:10px;
+  padding:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
+}
+
+input{
+  width:70%;
+  padding:10px;
+  background:black;
+  border:1px solid #333;
+  color:white;
+}
+
+button{
+  padding:10px 18px;
+  background:#00d4ff;
+  border:none;
+  color:black;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.result{
+  margin-top:20px;
+  font-family:monospace;
+  color:#00d4ff;
+  white-space:pre-line;
+}
 </style>
 </head>
 
 <body>
 
-<!-- (ALL YOUR HTML ABOVE REMAINS EXACTLY SAME UNTIL THE INPUT LINE) -->
-
-<input type="text" id="delegateID" placeholder="Enter ID (e.g. HRC01)" class="input" autocomplete="off" spellcheck="false">
-
-<!-- (rest of HTML same) -->
+<div class="card">
+  <h2>Delegate Authentication Terminal</h2>
+  <br>
+  <input type="text" id="delegateID" placeholder="Enter ID (e.g. HRC01)">
+  <button onclick="findPortfolio()">Search</button>
+  <div class="result" id="result"></div>
+</div>
 
 <script>
-
-/* ================= REAL HRC DATABASE ================= */
 const delegates = {
  "HRC01": { country: "United States of America", name: "Syed Arahan" },
  "HRC02": { country: "Russian Federation", name: "Jyash Ashish Tholiya" },
@@ -50,44 +80,22 @@ const delegates = {
 function findPortfolio(){
   const id=document.getElementById("delegateID").value.trim().toUpperCase();
   const r=document.getElementById("result");
-  
-  clearInterval(typingInterval);
-  r.innerHTML = "";
-  
-  let resultText = "";
-  
+
   if(!id.match(/^HRC\d{2}$/)){
-    resultText = "Error: Invalid format.\nPlease use HRC followed by 2 digits (e.g. HRC01)";
-    r.style.color = "#ff4757";
+    r.style.color="#ff4757";
+    r.textContent="Error: Invalid format.\nPlease use HRC followed by 2 digits (e.g. HRC01)";
   }
   else if(delegates[id]){
-    resultText = `Authentication Successful.\nDelegate: ${delegates[id].name}\nAllotment: ${delegates[id].country}`;
-    r.style.color = "#00d4ff";
+    r.style.color="#00d4ff";
+    r.textContent=`Authentication Successful.
+Delegate: ${delegates[id].name}
+Allotment: ${delegates[id].country}`;
   }
   else{
-    resultText = "Error: ID not found in registry.";
-    r.style.color = "#ff4757";
+    r.style.color="#ff4757";
+    r.textContent="Error: ID not found in registry.";
   }
-
-  let i = 0;
-  r.innerHTML = '<span class="typing-cursor"></span>';
-  
-  typingInterval = setInterval(() => {
-    if (i < resultText.length) {
-      let currentText = resultText.substring(0, i + 1).replace(/\n/g, "<br>");
-      r.innerHTML = currentText + '<span class="typing-cursor"></span>';
-      i++;
-    } else {
-      clearInterval(typingInterval);
-    }
-  }, 40); 
 }
-
-document.getElementById("delegateID").addEventListener("keydown", function(e){
-  if(e.key==="Enter"){
-    findPortfolio();
-  }
-});
 </script>
 
 </body>
