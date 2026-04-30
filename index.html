@@ -8,107 +8,499 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+
+/* Background */
 body{
-  margin:0;
-  font-family:'Inter',sans-serif;
-  background:#0c1428;
+  background:
+    linear-gradient(rgba(12,20,40,0.82), rgba(12,20,40,0.9)),
+    url('https://images.unsplash.com/photo-1529101091764-c3526daf38fe?q=60&w=1200&auto=format&fit=crop')
+    no-repeat center center fixed;
+  background-size:cover;
   color:white;
+  overflow-x:hidden;
+}
+
+/* Loader Css*/
+#pageLoader{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(rgba(12,20,40,0.95), rgba(12,20,40,0.98));
   display:flex;
   align-items:center;
   justify-content:center;
-  height:100vh;
+  flex-direction:column;
+  z-index:9999;
+  transition:opacity .6s ease, visibility .6s ease;
 }
 
-.card{
-  width:600px;
-  background:#000;
-  border-radius:10px;
-  padding:25px;
-  box-shadow:0 10px 30px rgba(0,0,0,.6);
+#pageLoader.hide{
+  opacity:0;
+  visibility:hidden;
 }
 
-input{
-  width:70%;
-  padding:10px;
-  background:black;
-  border:1px solid #333;
+/* UNHRC Logo */
+.loader-logo-img{
+  width:140px;
+  margin-bottom:25px;
+  filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(0,212,255,0.3));
+  opacity:0;
+  transform:translateY(-10px);
+  animation:fadeInLogo 1s ease forwards;
+}
+
+@keyframes fadeInLogo{
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* loader animation */
+.newtons-cradle {
+ --uib-size: 70px;
+ --uib-speed: 1.2s;
+ --uib-color: #00d4ff;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ width:var(--uib-size);
+ height:var(--uib-size);
+}
+
+.newtons-cradle__dot{
+ height:100%;
+ width:25%;
+ transform-origin:center top;
+}
+
+.newtons-cradle__dot::after{
+ content:'';
+ display:block;
+ width:100%;
+ height:25%;
+ border-radius:50%;
+ background:var(--uib-color);
+}
+
+.newtons-cradle__dot:first-child{
+ animation:swing var(--uib-speed) linear infinite;
+}
+
+.newtons-cradle__dot:last-child{
+ animation:swing2 var(--uib-speed) linear infinite;
+}
+
+@keyframes swing{
+ 0%{transform:rotate(0deg);animation-timing-function:ease-out;}
+ 25%{transform:rotate(70deg);animation-timing-function:ease-in;}
+ 50%{transform:rotate(0deg);}
+}
+
+@keyframes swing2{
+ 0%{transform:rotate(0deg);}
+ 50%{transform:rotate(0deg);animation-timing-function:ease-out;}
+ 75%{transform:rotate(-70deg);animation-timing-function:ease-in;}
+}
+
+.loader-text{
+  margin-top:20px;
+  opacity:.7;
+}
+
+/* Main Text Styles */
+.emacity-red{color:#ff4757;font-weight:700}
+
+/* --- NEW GRID LAYOUT --- */
+.layout-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  min-height: 100vh;
+  padding: 80px 5%;
+  max-width: 1400px;
+  margin: 0 auto;
+  transition: all 0.5s ease;
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 650px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-content h1{
+  font-size:clamp(4rem,10vw,9rem);
+  font-weight:900;
+  background:linear-gradient(135deg,#00d4ff,#a4b0ff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero-content p{
+  font-size:1.3rem;
+  margin:30px 0;
+  line-height:1.7;
+}
+
+.portfolio-content {
+  flex: 1;
+  width: 100%;
+  max-width: 600px;
+  animation: slideInRight 0.6s ease forwards;
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Cyber Grid Button for Show Portfolio */
+.button {
+  --main-color: rgb(0, 212, 255);
+  --main-bg-color: rgba(0, 212, 255, 0.36);
+  --pattern-color: rgba(0, 212, 255, 0.1);
+
+  filter: hue-rotate(0deg);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+  background: radial-gradient(
+      circle,
+      var(--main-bg-color) 0%,
+      rgba(0, 0, 0, 0) 95%
+    ),
+    linear-gradient(var(--pattern-color) 1px, transparent 1px),
+    linear-gradient(to right, var(--pattern-color) 1px, transparent 1px);
+  background-size: cover, 15px 15px, 15px 15px;
+  background-position: center center, center center, center center;
+  border-image: radial-gradient(circle, var(--main-color) 0%, rgba(0, 0, 0, 0) 100%) 1;
+  border-style: solid;
+  border-width: 1px 0 1px 0;
+  color: var(--main-color);
+  padding: 1rem 3rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+  transition: background-size 0.2s ease-in-out, opacity 0.3s ease;
+  width: 100%;
+}
+
+.button:hover { background-size: cover, 10px 10px, 10px 10px; }
+.button:active { filter: hue-rotate(50deg); }
+
+/* Base button styles kept for the small Search button */
+.btn{
+  padding:8px 18px;
+  border-radius:5px;
+  border:1px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.1);
   color:white;
+  font-weight:600;
+  cursor:pointer;
+  transition:.3s;
+  font-size: 0.85rem;
+}
+.btn:hover{
+  background:rgba(0,212,255,.2);
+  border-color:#00d4ff;
 }
 
-button{
-  padding:10px 18px;
-  background:#00d4ff;
+/* MAC STYLE CARD CSS */
+.card {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #0d1117;
+  border-radius: 10px;
+  background-color: #000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  text-align: left;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+}
+
+.mac-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.mac-header span {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.mac-header .red { background-color: #ff5f57; }
+.mac-header .yellow { background-color: #ffbd2e; }
+.mac-header .green { background-color: #28c941; }
+
+.card-title {
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 10px;
+  color: #e6e6ef;
+}
+
+.card-description {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.code-editor {
+  background-color: #0d1117;
+  color: #dcdcdc;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  border-radius: 5px;
+  padding: 15px;
+  overflow: auto;
+  min-height: 150px;
+  border: 1px solid #333;
+}
+
+.code-editor::-webkit-scrollbar { width: 8px; }
+.code-editor::-webkit-scrollbar-thumb { background: #555; border-radius: 4px; }
+
+/* TERMINAL INTEGRATION */
+.input-container{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:8px;
+  flex-wrap:wrap;
+  background:transparent;
+  padding:0;
   border:none;
-  color:black;
-  font-weight:700;
-  cursor:pointer;
+  width:100%;
+  margin-bottom:20px;
+}
+
+.bash-text{
+  font-size:0.9rem;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.bash-text .user{color:#e879f9;}
+.bash-text .vm{color:#2dd4bf;}
+.bash-text .char{color:#a78bfa;}
+
+.input{
+  background:transparent;
+  border:none;
+  outline:none;
+  color:white;
+  padding:0;
+  min-width:180px;
+  font-family: monospace;
+  font-size: 14px;
+  text-align: left;
+  flex: 1;
+}
+
+.input:focus{
+  text-shadow:0 0 5px rgba(0,212,255,0.5);
 }
 
 .result{
-  margin-top:20px;
-  font-family:monospace;
+  font-size:1.1rem;
+  font-weight:600;
   color:#00d4ff;
-  white-space:pre-line;
+  font-family: monospace;
+  line-height: 1.6;
+  text-align: left;
+}
+
+/* Typing Cursor Animation */
+.typing-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1.1rem;
+  background-color: currentColor;
+  vertical-align: bottom;
+  animation: blink 1s step-end infinite;
+  margin-left: 4px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+footer{text-align:center;padding:40px 8%;opacity:.8}
+
+/* Responsive fixes */
+@media(max-width:900px){
+  .layout-wrapper {
+    flex-direction: column; /* Stack on mobile */
+    gap: 30px;
+    padding: 60px 5%;
+  }
+  .portfolio-content {
+    animation: slideInUp 0.6s ease forwards;
+  }
+  .button {
+    font-size: 1.2rem;
+    padding: 1rem 1.5rem;
+  }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h2>Delegate Authentication Terminal</h2>
-  <br>
-  <input type="text" id="delegateID" placeholder="Enter ID (e.g. HRC01)">
-  <button onclick="findPortfolio()">Search</button>
-  <div class="result" id="result"></div>
+<div id="pageLoader">
+  <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/ea/United_Nations_Human_Rights_Council_Logo.svg/330px-United_Nations_Human_Rights_Council_Logo.svg.png" class="loader-logo-img">
+
+  <div class="newtons-cradle">
+    <div class="newtons-cradle__dot"></div>
+    <div class="newtons-cradle__dot"></div>
+    <div class="newtons-cradle__dot"></div>
+    <div class="newtons-cradle__dot"></div>
+  </div>
+
+  <div class="loader-text">Preparing your committee experience...</div>
 </div>
 
-<script>
+<div class="layout-wrapper">
+  
+  <div class="hero-content">
+    <h1>UNHRC</h1>
+    <p>
+      <strong>Assessing the Human Rights Implications of Militarization and Maritime Tensions in the Strait of Hormuz</strong><br><br>
+      <span class="emacity-red">Emacity</span> Model United Nations · Pune Chapter · 16 & 17 May
+    </p>
+    <button id="showBtn" class="button" onclick="showPortfolio()">Show Portfolio</button>
+  </div>
 
-/* ✅ CLEAN & COMPLETE DATABASE */
-const delegates = {
-"HRC01": { country: "United States of America", name: "Syed Arahan" },
-"HRC02": { country: "Russian Federation", name: "Jyash Ashish Tholiya" },
-"HRC03": { country: "Islamic Republic of Iran", name: "Jhanvi Ranjan" },
-"HRC04": { country: "United Kingdom of Great Britain and Northern Ireland", name: "Kartikeya Deshmukh" },
-"HRC05": { country: "Kingdom of the Netherlands", name: "Arayna Chharia" },
-"HRC06": { country: "Federal Republic of Germany", name: "Advait Karthikeyan" },
-"HRC07": { country: "New Zealand", name: "Grishma Kshirsagar" },
-"HRC08": { country: "Canada", name: "Anish Dasgupta" },
-"HRC09": { country: "People's Republic of China", name: "Siddharth Dongre" },
-"HRC10": { country: "State of Palestine", name: "Shravya Pankaj Patil" },
-"HRC11": { country: "French Republic", name: "Vallabh Borawake" },
-"HRC12": { country: "State of Israel", name: "Rajsi Rajendra Takale" },
-"HRC13": { country: "Republic of South Africa", name: "Rutvij Rajendra Takale" },
-"HRC14": { country: "Republic of India", name: "Atharva Saraf" },
-"HRC15": { country: "Republic of Indonesia", name: "Advait Chidhanand" },
-"HRC16": { country: "People's Republic of Bangladesh", name: "Saish Saiprasad Chigare" },
-"HRC17": { country: "Kingdom of Norway", name: "Ananya Shinde" },
-"HRC18": { country: "United Mexican States", name: "Vidhyesh Kiran Dabholkar" },
-"HRC19": { country: "Federal Republic of Nigeria", name: "Aaradhy Shinde" }
+  <div id="portfolio" class="portfolio-content" style="display: none;">
+    <div class="card">
+      <div class="mac-header">
+        <span class="red"></span>
+        <span class="yellow"></span>
+        <span class="green"></span>
+      </div>
+      
+      <span class="card-title">Delegate Authentication Terminal</span>
+      <p class="card-description">
+        Secure connection established. Query the registry by ID.
+      </p>
+      
+      <div class="code-editor">
+        <div class="input-container">
+          <p class="bash-text">
+            <span class="user">delegate</span><span class="vm">@unhrc</span>:<span class="char">~</span>#
+          </p>
+
+          <input type="text" id="delegateID" placeholder="Enter ID (e.g. ID001)" class="input" autocomplete="off" spellcheck="false">
+
+          <button class="btn" onclick="findPortfolio()">Search</button>
+        </div>
+
+        <div class="result" id="result"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  "Diplomacy with purpose." — Emacity MUN
+</footer>
+
+<script>
+const delegates={
+ "ID001":{country:"United States",name:"Alex"},
+ "ID002":{country:"China",name:"Priya"}
 };
 
-function findPortfolio(){
-  const id = document.getElementById("delegateID").value.trim().toUpperCase();
-  const r = document.getElementById("result");
+function showPortfolio(){
+  const portfolioSection = document.getElementById('portfolio');
+  const showBtn = document.getElementById('showBtn');
+  
+  // Show the terminal grid item
+  portfolioSection.style.display = 'block';
+  
+  // Hide the button to keep UI clean
+  showBtn.style.display = 'none';
 
-  if(!id.match(/^HRC\d{2}$/)){
-    r.style.color="#ff4757";
-    r.textContent="Error: Invalid format.\nUse HRC01–HRC99";
-    return;
-  }
-
-  if(delegates[id]){
-    r.style.color="#00d4ff";
-    r.textContent =
-`Authentication Successful.
-Delegate: ${delegates[id].name}
-Allotment: ${delegates[id].country}`;
-  } else {
-    r.style.color="#ff4757";
-    r.textContent="Error: ID not found in registry.";
-  }
+  // Smoothly align if the user is on mobile and it drops below
+  setTimeout(() => {
+    portfolioSection.scrollIntoView({behavior:'smooth', block: 'center'});
+  }, 50);
 }
+
+let typingInterval;
+
+function findPortfolio(){
+  const id=document.getElementById("delegateID").value.trim().toUpperCase();
+  const r=document.getElementById("result");
+  
+  clearInterval(typingInterval);
+  r.innerHTML = "";
+  
+  let resultText = "";
+  
+  if(!id.match(/^ID\d{3}$/)){
+    resultText = "Error: Invalid format.\nPlease use ID followed by 3 digits (e.g. ID001)";
+    r.style.color = "#ff4757";
+  }
+  else if(delegates[id]){
+    resultText = `Authentication Successful.\nDelegate: ${delegates[id].name}\nAllotment: ${delegates[id].country}`;
+    r.style.color = "#00d4ff";
+  }
+  else{
+    resultText = "Error: ID not found in registry.";
+    r.style.color = "#ff4757";
+  }
+
+  let i = 0;
+  r.innerHTML = '<span class="typing-cursor"></span>';
+  
+  typingInterval = setInterval(() => {
+    if (i < resultText.length) {
+      let currentText = resultText.substring(0, i + 1).replace(/\n/g, "<br>");
+      r.innerHTML = currentText + '<span class="typing-cursor"></span>';
+      i++;
+    } else {
+      clearInterval(typingInterval);
+    }
+  }, 40); 
+}
+
+/* so that enter key works */
+document.getElementById("delegateID").addEventListener("keydown", function(e){
+  if(e.key==="Enter"){
+    findPortfolio();
+  }
+});
+
+/* hide loader */
+window.addEventListener("load", () => {
+  setTimeout(()=>{
+    document.getElementById("pageLoader").classList.add("hide");
+  }, 800);
+});
 </script>
 
 </body>
