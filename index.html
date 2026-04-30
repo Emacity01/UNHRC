@@ -64,17 +64,19 @@ button{
 </div>
 
 <script>
+
+/* ✅ CLEAN & COMPLETE DATABASE */
 const delegates = {
- "HRC01": { country: "United States of America", name: "Syed Arahan" },
- "HRC02": { country: "Russian Federation", name: "Jyash Ashish Tholiya" },
- "HRC03": { country: "Islamic Republic of Iran", name: "Jhanvi Ranjan" },
- "HRC04": { country: "United Kingdom", name: "Kartikeya Deshmukh" },
- "HRC05": { country: "Kingdom of the Netherlands", name: "Arayna Chharia" },
- "HRC06": { country: "Federal Republic of Germany", name: "Advait Karthikeyan" },
- "HRC07": { country: "New Zealand", name: "Grishma Kshirsagar" },
- "HRC08": { country: "Canada", name: "Anish Dasgupta" },
- "HRC09": { country: "People's Republic of China", name: "Siddharth Dongre" },
- "HRC10": { country: "State of Palestine", name: "Shravya Pankaj Patil" },
+"HRC01": { country: "United States of America", name: "Syed Arahan" },
+"HRC02": { country: "Russian Federation", name: "Jyash Ashish Tholiya" },
+"HRC03": { country: "Islamic Republic of Iran", name: "Jhanvi Ranjan" },
+"HRC04": { country: "United Kingdom of Great Britain and Northern Ireland", name: "Kartikeya Deshmukh" },
+"HRC05": { country: "Kingdom of the Netherlands", name: "Arayna Chharia" },
+"HRC06": { country: "Federal Republic of Germany", name: "Advait Karthikeyan" },
+"HRC07": { country: "New Zealand", name: "Grishma Kshirsagar" },
+"HRC08": { country: "Canada", name: "Anish Dasgupta" },
+"HRC09": { country: "People's Republic of China", name: "Siddharth Dongre" },
+"HRC10": { country: "State of Palestine", name: "Shravya Pankaj Patil" },
 "HRC11": { country: "French Republic", name: "Vallabh Borawake" },
 "HRC12": { country: "State of Israel", name: "Rajsi Rajendra Takale" },
 "HRC13": { country: "Republic of South Africa", name: "Rutvij Rajendra Takale" },
@@ -82,25 +84,27 @@ const delegates = {
 "HRC15": { country: "Republic of Indonesia", name: "Advait Chidhanand" },
 "HRC16": { country: "People's Republic of Bangladesh", name: "Saish Saiprasad Chigare" },
 "HRC17": { country: "Kingdom of Norway", name: "Ananya Shinde" },
-"HRC18": { country: "Mexico", name: "Vidhyesh Kiran Dabholkar" },
-"HRC19": { country: "Nigeria", name: "Aaradhy Shinde" }
+"HRC18": { country: "United Mexican States", name: "Vidhyesh Kiran Dabholkar" },
+"HRC19": { country: "Federal Republic of Nigeria", name: "Aaradhy Shinde" }
 };
 
 function findPortfolio(){
-  const id=document.getElementById("delegateID").value.trim().toUpperCase();
-  const r=document.getElementById("result");
+  const id = document.getElementById("delegateID").value.trim().toUpperCase();
+  const r = document.getElementById("result");
 
   if(!id.match(/^HRC\d{2}$/)){
     r.style.color="#ff4757";
-    r.textContent="Error: Invalid format.\nPlease use HRC followed by 2 digits (e.g. HRC01)";
+    r.textContent="Error: Invalid format.\nUse HRC01–HRC99";
+    return;
   }
-  else if(delegates[id]){
+
+  if(delegates[id]){
     r.style.color="#00d4ff";
-    r.textContent=`Authentication Successful.
+    r.textContent =
+`Authentication Successful.
 Delegate: ${delegates[id].name}
 Allotment: ${delegates[id].country}`;
-  }
-  else{
+  } else {
     r.style.color="#ff4757";
     r.textContent="Error: ID not found in registry.";
   }
