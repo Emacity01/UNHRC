@@ -10,10 +10,9 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
 
-/* Background */
 body{
   background:
-    linear-gradient(rgba(12,20,40,0.82), rgba(12,20,40,0.9)),
+    linear-gradient(rgba(12,20,40,0.85), rgba(12,20,40,0.95)),
     url('https://images.unsplash.com/photo-1529101091764-c3526daf38fe?q=60&w=1200&auto=format&fit=crop')
     no-repeat center center fixed;
   background-size:cover;
@@ -21,92 +20,77 @@ body{
   overflow-x:hidden;
 }
 
-/* Loader Css*/
+/* Loader */
 #pageLoader{
   position:fixed;
   inset:0;
-  background:linear-gradient(rgba(12,20,40,0.95), rgba(12,20,40,0.98));
+  background:#0c1428;
   display:flex;
   align-items:center;
   justify-content:center;
-  flex-direction:column;
   z-index:9999;
   transition:opacity .6s ease, visibility .6s ease;
 }
-
-#pageLoader.hide{
-  opacity:0;
-  visibility:hidden;
-}
-
+#pageLoader.hide{opacity:0;visibility:hidden;}
 .loader-logo-img{
-  width:140px;
-  margin-bottom:25px;
-  filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(0,212,255,0.3));
+  width:130px;
+  filter:brightness(0) invert(1);
 }
 
-/* layout */
-.layout-wrapper {
+/* Layout */
+.layout-wrapper{
   display:flex;
-  flex-direction:row;
+  gap:60px;
+  min-height:100vh;
   align-items:center;
   justify-content:center;
-  gap:50px;
-  min-height:100vh;
   padding:80px 5%;
 }
 
-/* hero */
-.hero-content {
-  flex:1;
-  max-width:650px;
-}
-
 .hero-content h1{
-  font-size:clamp(4rem,10vw,9rem);
+  font-size:clamp(4rem,10vw,8rem);
   font-weight:900;
   background:linear-gradient(135deg,#00d4ff,#a4b0ff);
   -webkit-background-clip:text;
   color:transparent;
 }
 
-/* button */
-.button {
+.button{
+  margin-top:20px;
   cursor:pointer;
   background:#00d4ff;
   border:none;
   padding:1rem 3rem;
   font-weight:700;
-  font-size:1.2rem;
-  width:100%;
+  font-size:1.1rem;
+  border-radius:6px;
 }
 
-/* card */
-.card {
-  width:100%;
-  padding:20px;
-  background:black;
-  border-radius:10px;
+.card{
+  padding:25px;
+  background:rgba(0,0,0,0.8);
+  border-radius:12px;
   border:1px solid #333;
+  min-width:320px;
 }
 
-/* input */
 .input{
   width:100%;
-  padding:10px;
+  padding:12px;
+  margin-top:10px;
   background:black;
   border:1px solid #333;
   color:white;
+  border-radius:6px;
 }
 
-/* result */
 .result{
-  margin-top:15px;
+  margin-top:18px;
   color:#00d4ff;
   font-family:monospace;
   white-space:pre-line;
+  font-size:15px;
 }
-
 </style>
 </head>
 
@@ -121,21 +105,15 @@ body{
   <div class="hero-content">
     <h1>UNHRC</h1>
     <p><b>Human Rights Council Simulation</b></p>
-
     <button class="button" onclick="show()">Show Portfolio</button>
   </div>
 
-  <div id="portfolio" style="display:none;flex:1;">
+  <div id="portfolio" style="display:none;">
     <div class="card">
-
       <h3>Delegate Terminal</h3>
-
       <input class="input" id="delegateID" placeholder="Enter ID (e.g. HRC01)">
-
       <button class="button" onclick="find()">Search</button>
-
       <div class="result" id="result"></div>
-
     </div>
   </div>
 
@@ -145,23 +123,23 @@ body{
 
 /* ===== DATABASE ===== */
 const delegates = {
-"HRC01": { name:"Syed Arahan", country:"USA" },
-"HRC02": { name:"Jyash Ashish Tholiya", country:"Russia" },
-"HRC03": { name:"Jhanvi Ranjan", country:"Iran" },
+"HRC01": { name:"Syed Arahan", country:"United States of America" },
+"HRC02": { name:"Jyash Ashish Tholiya", country:"Russian Federation" },
+"HRC03": { name:"Jhanvi Ranjan", country:"Islamic Republic of Iran" },
 "HRC04": { name:"Kartikeya Deshmukh", country:"United Kingdom" },
 "HRC05": { name:"Arayna Chharia", country:"Netherlands" },
 "HRC06": { name:"Advait Karthikeyan", country:"Germany" },
 "HRC07": { name:"Grishma Kshirsagar", country:"New Zealand" },
 "HRC08": { name:"Anish Dasgupta", country:"Canada" },
-"HRC09": { name:"Siddharth Dongre", country:"China" },
-"HRC10": { name:"Shravya Pankaj Patil", country:"Palestine" },
+"HRC09": { name:"Siddharth Dongre", country:"People's Republic of China" },
+"HRC10": { name:"Shravya Pankaj Patil", country:"State of Palestine" },
 "HRC11": { name:"Vallabh Borawake", country:"France" },
 "HRC12": { name:"Rajsi Rajendra Takale", country:"Israel" },
-"HRC13": { name:"Rutvij Rajendra Takale", country:"South Africa" },
-"HRC14": { name:"Atharva Saraf", country:"India" },
+"HRC13": { name:"Rutvij Rajendra Takale", country:"Republic of South Africa" },
+"HRC14": { name:"Atharva Saraf", country:"Republic of India" },
 "HRC15": { name:"Advait Chidhanand", country:"Indonesia" },
 "HRC16": { name:"Saish Saiprasad Chigare", country:"Bangladesh" },
-"HRC17": { name:"Ananya Shinde", country:"Norway" },
+"HRC17": { name:"Ananya Shinde", country:"Kingdom of Norway" },
 "HRC18": { name:"Vidhyesh Kiran Dabholkar", country:"Mexico" },
 "HRC19": { name:"Aaradhy Shinde", country:"Nigeria" },
 "HRC20": { name:"Shiv Talesara", country:"Syria" },
@@ -169,13 +147,12 @@ const delegates = {
 "HRC22": { name:"Sanvi Latey", country:"Japan" },
 "HRC23": { name:"Shlok Saurabh Patwardhan", country:"North Korea" },
 "HRC24": { name:"Swayam Pratik Lodha", country:"Turkey" },
-"HRC25": { name:"Aarav Modak", country:"Afghanisatn" },
-"HRC26": { name:"TARUN KUMAR", country:"Yemen" },
+"HRC25": { name:"Aarav Modak", country:"Afghanistan" },
+"HRC26": { name:"Tarun Kumar", country:"Yemen" },
 "HRC27": { name:"Saish Saiprasad Chigare", country:"Pakistan" }
 };
 
-
-/* ===== SHOW ===== */
+/* ===== UI ===== */
 function show(){
   document.getElementById("portfolio").style.display="block";
 }
@@ -185,28 +162,28 @@ function find(){
   const id=document.getElementById("delegateID").value.trim().toUpperCase();
   const r=document.getElementById("result");
 
-  if(!id.match(/^HRC\d{2}$/)){
-    r.textContent="Invalid format. Use HRC01–HRC19";
+  if(!/^HRC\d{2}$/.test(id)){
+    r.textContent="Invalid ID format. Use HRC01 to HRC27";
     return;
   }
 
   if(delegates[id]){
     r.textContent =
 `Authentication Successful
-Delegate: ${delegates[id].name}
-Country: ${delegates[id].country}`;
+
+Delegate : ${delegates[id].name}
+Country  : ${delegates[id].country}`;
   } else {
-    r.textContent="ID not found";
+    r.textContent="No delegate found for this ID.";
   }
 }
 
-/* loader */
+/* Loader */
 window.onload=()=>{
   setTimeout(()=>{
     document.getElementById("pageLoader").classList.add("hide");
-  },800);
+  },700);
 }
-
 </script>
 
 </body>
