@@ -131,26 +131,26 @@ const delegates = {
 "HRC06": { name:"Advait Karthikeyan", country:"Germany" },
 "HRC07": { name:"Grishma Kshirsagar", country:"New Zealand" },
 "HRC08": { name:"Anish Dasgupta", country:"Canada" },
-"HRC09": { name:"Siddharth Dongre", country:"People's Republic of China" },
-"HRC10": { name:"Shravya Pankaj Patil", country:"State of Palestine" },
+"HRC09": { name:"Siddharth Dongre", country:"China" },
+"HRC10": { name:"Shravya Patil", country:"State of Palestine" },
 "HRC11": { name:"Vallabh Borawake", country:"France" },
-"HRC12": { name:"Rajsi Rajendra Takale", country:"Israel" },
-"HRC13": { name:"Rutvij Rajendra Takale", country:"Republic of South Africa" },
-"HRC14": { name:"Atharva Saraf", country:"Republic of India" },
+"HRC12": { name:"Rajsi Takale", country:"Israel" },
+"HRC13": { name:"Rutvij Takale", country:"South Africa" },
+"HRC14": { name:"Atharva Saraf", country:"India" },
 "HRC15": { name:"Advait Chidhanand", country:"Indonesia" },
 "HRC16": { name:"Saish Saiprasad Chigare", country:"Bangladesh" },
-"HRC17": { name:"Ananya Shinde", country:"Kingdom of Norway" },
-"HRC18": { name:"Vidhyesh Kiran Dabholkar", country:"Mexico" },
+"HRC17": { name:"Ananya Shinde", country:"Norway" },
+"HRC18": { name:"Vidhyesh Dabholkar", country:"Mexico" },
 "HRC19": { name:"Aaradhy Shinde", country:"Nigeria" },
 "HRC20": { name:"Shiv Talesara", country:"Syria" },
 "HRC21": { name:"Rushil Bhasin", country:"Switzerland" },
 "HRC22": { name:"Sanvi Latey", country:"Japan" },
-"HRC23": { name:"Shlok Saurabh Patwardhan", country:"North Korea" },
-"HRC24": { name:"Swayam Pratik Lodha", country:"Turkey" },
+"HRC23": { name:"Shlok Patwardhan", country:"North Korea" },
+"HRC24": { name:"Swayam Lodha", country:"Turkey" },
 "HRC25": { name:"Aarav Modak", country:"Afghanistan" },
 "HRC26": { name:"Tarun Kumar", country:"Saudi Arabia" },
 "HRC27": { name:"Saish Saiprasad Chigare", country:"Pakistan" },
-"HRC28": { name:"Rabreet Kaur", country:"Brazil" }	
+"HRC28": { name:"Rabreet Kaur", country:"Brazil" }
 };
 
 /* ===== UI ===== */
@@ -158,17 +158,24 @@ function show(){
   document.getElementById("portfolio").style.display="block";
 }
 
-/* ===== SEARCH ===== */
+/* ===== FIXED SEARCH (ROBUST) ===== */
 function find(){
-  const id=document.getElementById("delegateID").value.trim().toUpperCase();
+
+  let id=document.getElementById("delegateID").value
+    .trim()
+    .toUpperCase()
+    .replace(/\s/g,"");
+
   const r=document.getElementById("result");
 
-  if(!/^HRC\d{2}$/.test(id)){
-    r.textContent="Invalid ID format. Use HRC01 to HRC27";
+  // format check
+  if(!id.startsWith("HRC")){
+    r.textContent="Invalid ID format. Use HRC01–HRC28";
     return;
   }
 
-  if(delegates[id]){
+  // lookup
+  if(delegates.hasOwnProperty(id)){
     r.textContent =
 `Authentication Successful
 
@@ -185,6 +192,7 @@ window.onload=()=>{
     document.getElementById("pageLoader").classList.add("hide");
   },700);
 }
+
 </script>
 
 </body>
