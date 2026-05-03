@@ -3,130 +3,96 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>UNHRC | Emacity MUN</title>
+<title>UNHRC Portfolio Access • Emacity MUN</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
-
 body{
-  background:
-    linear-gradient(rgba(12,20,40,0.85), rgba(12,20,40,0.95)),
-    url('https://images.unsplash.com/photo-1529101091764-c3526daf38fe?q=60&w=1200&auto=format&fit=crop')
-    no-repeat center center fixed;
-  background-size:cover;
-  color:white;
-  overflow-x:hidden;
+    margin:0;
+    font-family:'Inter',sans-serif;
+    background:linear-gradient(135deg,#0b0f1a,#111a2e);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
 }
-
-/* Loader */
-#pageLoader{
-  position:fixed; inset:0;
-  background:#0c1428;
-  display:flex; align-items:center; justify-content:center;
-  z-index:9999;
-  transition:opacity .6s ease, visibility .6s ease;
-}
-#pageLoader.hide{opacity:0;visibility:hidden;}
-.loader-logo-img{width:130px; filter:brightness(0) invert(1);}
-
-/* Layout */
-.layout-wrapper{
-  display:flex; gap:60px;
-  min-height:100vh;
-  align-items:center; justify-content:center;
-  padding:80px 5%;
-}
-
-.hero-content h1{
-  font-size:clamp(4rem,10vw,8rem);
-  font-weight:900;
-  background:linear-gradient(135deg,#00d4ff,#a4b0ff);
-  -webkit-background-clip:text;
-  color:transparent;
-}
-
-.button{
-  margin-top:20px;
-  cursor:pointer;
-  background:#00d4ff;
-  border:none;
-  padding:1rem 3rem;
-  font-weight:700;
-  font-size:1.1rem;
-  border-radius:6px;
-}
-
 .card{
-  padding:25px;
-  background:rgba(0,0,0,0.8);
-  border-radius:12px;
-  border:1px solid #333;
-  min-width:320px;
+    background:#1b2742;
+    padding:40px;
+    border-radius:12px;
+    text-align:center;
+    width:360px;
+    box-shadow:0 0 30px rgba(0,0,0,0.6);
 }
-
-.input{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  background:black;
-  border:1px solid #333;
-  color:white;
-  border-radius:6px;
+input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:6px;
+    margin:15px 0;
+    font-size:16px;
 }
-
-.result{
-  margin-top:18px;
-  color:#00d4ff;
-  font-family:monospace;
-  white-space:pre-line;
-  font-size:15px;
+button{
+    padding:12px 20px;
+    background:#00b4ff;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-weight:600;
+    cursor:pointer;
+}
+#result{
+    margin-top:20px;
+    font-size:15px;
+    white-space:pre-line;
 }
 </style>
 </head>
-
 <body>
 
-<div id="pageLoader">
-  <img class="loader-logo-img" src="https://upload.wikimedia.org/wikipedia/en/thumb/e/ea/United_Nations_Human_Rights_Council_Logo.svg/330px-United_Nations_Human_Rights_Council_Logo.svg.png">
-</div>
-
-<div class="layout-wrapper">
-
-  <div class="hero-content">
-    <h1>UNHRC</h1>
-    <p><b>Human Rights Council Simulation</b></p>
-    <button class="button" onclick="show()">Show Portfolio</button>
-  </div>
-
-  <div id="portfolio" style="display:none;">
-    <div class="card">
-      <h3>Delegate Terminal</h3>
-      <input class="input" id="delegateID" placeholder="Enter ID (e.g. HRC01)">
-      <button class="button" onclick="find()">Search</button>
-      <div class="result" id="result"></div>
-    </div>
-  </div>
-
+<div class="card">
+    <h2>UNHRC Portfolio Access</h2>
+    <p>Enter your Delegate ID</p>
+    <input id="delegateID" placeholder="HRC01 / hrc1" />
+    <button onclick="find()">Access Portfolio</button>
+    <div id="result"></div>
 </div>
 
 <script>
-/* ===== ENCODED DATABASE (hidden) ===== */
-const encodedData = `
-eyJIUkMwMSI6eyJuYW1lIjoiU3llZCBBcmFoYW4iLCJjb3VudHJ5IjoiVW5pdGVkIFN0YXRlcyBvZiBBbWVyaWNhIn0s
-IkhSQzAyIjp7Im5hbWUiOiJKeWFzaCBBc2hpc2ggVGhvbGl5YSIsImNvdW50cnkiOiJSdXNzaWFuIEZlZGVyYXRpb24ifSwiSFJDM
-DMiOnsibmFtZSI6IkpoYW52aSBSYW5qYW4iLCJjb3VudHJ5IjoiSXNsYW1pYyBSZXB1YmxpYyBvZiBJcmFuIn0sIkhSQzA0Ijp7
-Im5hbWUiOiJLYXJ0aWtleWEgRGVzaG11a2giLCJjb3VudHJ5IjoiVW5pdGVkIEtpbmdkb20ifSwiSFJDMjkiOnsibmFtZSI6IlNh
-YW52aSBTaGFybWEiLCJjb3VudHJ5IjoiWWVtZW4ifX0=`.replace(/\s/g,'');
+const delegates = {
+"HRC01": { name:"Syed Arahan", country:"United States of America" },
+"HRC02": { name:"Jyash Ashish Tholiya", country:"Russian Federation" },
+"HRC03": { name:"Jhanvi Ranjan", country:"Islamic Republic of Iran" },
+"HRC04": { name:"Kartikeya Deshmukh", country:"United Kingdom" },
+"HRC05": { name:"Arayna Chharia", country:"Netherlands" },
+"HRC06": { name:"Advait Karthikeyan", country:"Germany" },
+"HRC07": { name:"Grishma Kshirsagar", country:"New Zealand" },
+"HRC08": { name:"Anish Dasgupta", country:"Canada" },
+"HRC09": { name:"Siddharth Dongre", country:"China" },
+"HRC10": { name:"Shravya Patil", country:"State of Palestine" },
+"HRC11": { name:"Vallabh Borawake", country:"France" },
+"HRC12": { name:"Rajsi Takale", country:"Israel" },
+"HRC13": { name:"Rutvij Takale", country:"South Africa" },
+"HRC14": { name:"Atharva Saraf", country:"India" },
+"HRC15": { name:"Advait Chidhanand", country:"Indonesia" },
+"HRC16": { name:"Aarush Chandel", country:"Bangladesh" },
+"HRC17": { name:"Ananya Shinde", country:"Norway" },
+"HRC18": { name:"Vidhyesh Dabholkar", country:"Mexico" },
+"HRC19": { name:"Aaradhy Shinde", country:"Nigeria" },
+"HRC20": { name:"Shiv Talesara", country:"Syria" },
+"HRC21": { name:"Rushil Bhasin", country:"Switzerland" },
+"HRC22": { name:"Sanvi Latey", country:"Japan" },
+"HRC23": { name:"Shlok Patwardhan", country:"North Korea" },
+"HRC24": { name:"Swayam Lodha", country:"Turkey" },
+"HRC25": { name:"Aarav Modak", country:"Afghanistan" },
+"HRC26": { name:"Tarun Kumar", country:"Saudi Arabia" },
+"HRC27": { name:"Saish Saiprasad Chigare", country:"Pakistan" },
+"HRC28": { name:"Rabreet Kaur", country:"Brazil" },
+"HRC29": { name:"Saanvi Sharma", country:"Yemen" }
+};
 
-const delegates = JSON.parse(atob(encodedData));
-
-function show(){
-  document.getElementById("portfolio").style.display="block";
-}
-
-/* Auto format: hrc1 → HRC01 */
 function formatID(val){
   let num = val.replace(/\D/g,'');
   if(!num) return "";
@@ -153,13 +119,6 @@ Country  : ${delegates[id].country}`;
   } else {
     r.textContent="No delegate found. Check your ID and try again.";
   }
-}
-
-/* Loader */
-window.onload=()=>{
-  setTimeout(()=>{
-    document.getElementById("pageLoader").classList.add("hide");
-  },700);
 }
 </script>
 
